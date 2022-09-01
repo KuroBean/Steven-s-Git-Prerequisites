@@ -35,10 +35,42 @@ public class Blob {
 		}
 		unhashed = ret; 
 		hashed = getSHA1(unhashed);
-		createF();
+		createFBlob();
 
-//		System.out.println(ret);
-//		System.out.println(hashed);
+//		System.out.println("text:" + ret);
+//		System.out.println("encoded:" + hashed);
+//		System.out.println ("BLOB^^"); 
+
+
+		//		read.close(); 
+
+	}
+	
+	public Blob (String fileName, String Index) throws IOException {
+
+		String ret = "";
+
+		//get file and read 
+		try {
+
+			File f1 = new File(fileName);
+			Scanner read = new Scanner(f1);
+			while (read.hasNextLine()) {
+				ret += read.nextLine();
+			}
+			read.close(); 
+		} 
+		catch (FileNotFoundException err) {
+			System.out.println("There was an error!");
+			err.printStackTrace();
+		}
+		unhashed = ret; 
+		hashed = getSHA1(unhashed);
+		createFIndex();
+
+//		System.out.println("text:" + ret);
+//		System.out.println("encoded:" + hashed);
+//		System.out.println ("BLOB^^"); 
 
 
 		//		read.close(); 
@@ -62,16 +94,29 @@ public class Blob {
 
 		return ret; 
 	}
+	public String getHash() {
+		return hashed; 
+	}
 
-	private void createF () throws IOException { //with hashed as name
+	public void createFBlob () throws IOException { //with hashed as name
 		
 		File f = new File (hashed + ".txt"); 
-		PrintWriter pw = new PrintWriter("test/object/" + f); 
+		PrintWriter pw = new PrintWriter("test/objects/" + f); 
 		pw.append(unhashed); 
 		pw.close(); 
 		
 
 	}
+	public void createFIndex () throws IOException { //with hashed as name
+		
+		File f = new File (hashed + ".txt"); 
+		PrintWriter pw = new PrintWriter("test/objectsIndex/" + f); 
+		pw.append(unhashed); 
+		pw.close(); 
+		
+
+	}
+
 
 
 }
