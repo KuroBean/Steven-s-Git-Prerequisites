@@ -57,39 +57,7 @@ public class Blob {
 		//		read.close(); 
 
 	}
-	public Blob (String fileName, Boolean bool) throws IOException {
 
-		String ret = "";
-
-		//get file and read 
-		try {
-
-			File f1 = new File(fileName);
-			Scanner read = new Scanner(f1);
-			while (read.hasNextLine()) {
-				ret += read.nextLine();
-			}
-			read.close(); 
-		} 
-		catch (FileNotFoundException err) {
-			System.out.println("There was an error!");
-			err.printStackTrace();
-		}
-		zip(); 
-		hashedZipped = getSHA1(zipped); 
-		zip2(); 
-
-
-		//		System.out.println("text:" + ret);
-		//		System.out.println("encoded:" + hashed);
-		//		System.out.println ("BLOB^^"); 
-
-
-		//		read.close(); 
-		//		File f = new File ("test/" + "hashedZipped" + ".txt.zip"); 
-		//		f.delete(); 
-		System.out.println (zipped + "-" + hashedZipped); 
-	}
 
 
 	public Blob (String fileName, String Index) throws IOException { //for Index
@@ -124,25 +92,59 @@ public class Blob {
 	}
 
 
-		public void zip() throws IOException {
-	
-			String filePath = "test/Stuff.txt";
-			String zipPath = "test/" + "Stuff" + ".txt.zip";
-	
-			try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
-				File fileToZip = new File(filePath);
-				zipOut.putNextEntry(new ZipEntry(fileToZip.getName()));
-				Files.copy(fileToZip.toPath(), zipOut);
+
+
+
+
+	public Blob (String fileName, Boolean bool) throws IOException {//for zipping 
+
+		String ret = "";
+
+//		get file and read 
+		try {
+
+			File f1 = new File(fileName);
+			Scanner read = new Scanner(f1);
+			while (read.hasNextLine()) {
+				ret += read.nextLine();
 			}
-			getZipped(); 
-	
+			read.close(); 
+		} 
+		catch (FileNotFoundException err) {
+			System.out.println("There was an error!");
+			err.printStackTrace();
 		}
-	
+		
+		zip(); //makes a duplicate zip file 
+		setZipped(); //reads content from base file and compresses text 
+		hashedZipped = getSHA1(zipped); //sets hashedZipped for new zipped file name
+		zip2(); 
+
+
+		//		
+	}
+
+	public void zip() throws IOException {
+
+		String filePath = "test/Stuff.txt";
+		String zipPath = "test/objects/" + "Stuff" + ".txt.zip";
+
+		try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
+			File fileToZip = new File(filePath);
+			zipOut.putNextEntry(new ZipEntry(fileToZip.getName()));
+			Files.copy(fileToZip.toPath(), zipOut);
+		}
+
+
+	}
+
 
 	public void zip2() throws IOException {
 
-		String filePath = "test/Stuff.txt.zip";
-		String zipPath = "test/" + hashedZipped + ".txt.zip";
+		System.out.println ("hashedZipped:" + hashedZipped); 
+		
+		String filePath = "test/objects/Stuff.txt.zip";
+		String zipPath = "test/objects/" + hashedZipped + ".txt.zip";
 
 		try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
 			File fileToZip = new File(filePath);
@@ -152,21 +154,47 @@ public class Blob {
 
 
 		//
-		File delete = new File ("test/Stuff.txt.zip"); 
+		File delete = new File ("test/objects/Stuff.txt.zip"); 
 		delete.delete(); 
 
 	}
 
-	public void getZipped() throws IOException {
+	//	public void setZipped() throws IOException { //old reading from zipped file 
+	//		String temp = ""; 
+	//		File f1 = new File("test/" + "Stuff" + ".txt.zip");
+	//
+	//		//		Scanner read = new Scanner(f1);
+	//		//		while (read.hasNextLine()) {
+	//		//			temp += read.nextLine();
+	//		//		}
+	//		//		read.close(); 
+	//		BufferedReader	in = new BufferedReader(new FileReader("test/Stuff.txt.zip"));
+	//
+	//		while (in.ready()) {
+	//			Character temp1 = (char)in.read(); 
+	//			temp+=temp1; 
+	//
+	//		}
+	//
+	//
+	//		in.close(); 
+	//
+	//		zipped = temp; 
+	//		System.out.println ("Zipped:" + zipped); 
+	//		//		System.out.println (zipped); 
+	//		//		return zipped;  
+	//	}
+
+	public void setZipped() throws IOException {//reading from unzipped file and compressing text
 		String temp = ""; 
-		File f1 = new File("test/" + "Stuff" + ".txt.zip");
+		File f1 = new File("test/" + "Stuff" + ".txt");
 
 		//		Scanner read = new Scanner(f1);
 		//		while (read.hasNextLine()) {
 		//			temp += read.nextLine();
 		//		}
 		//		read.close(); 
-		BufferedReader	in = new BufferedReader(new FileReader("test/Stuff.txt.zip"));
+		BufferedReader	in = new BufferedReader(new FileReader("test/Stuff.txt"));
 
 		while (in.ready()) {
 			Character temp1 = (char)in.read(); 
@@ -174,13 +202,29 @@ public class Blob {
 
 		}
 
-
 		in.close(); 
 
-		zipped = temp; 
+		zipped = compress(temp); 
+		
+		System.out.println ("Zipped:" + zipped); 
 		//		System.out.println (zipped); 
 		//		return zipped;  
 	}
+
+	public static String compress(String str) throws IOException {
+		if (str == null || str.length() == 0) {
+			return str;
+		}
+
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		GZIPOutputStream gzip = new GZIPOutputStream(out);
+		gzip.write(str.getBytes());
+		gzip.close();
+		return out.toString("ISO-8859-1");
+	}
+
+
+
 
 
 
