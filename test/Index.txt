@@ -1,2 +1,3 @@
-bar.txt : af727e4deee39aead170e830c61b9c2844a3d75b
-foobar.txt : 52c71e0b7a1830fa77280af8c04e38d85bfc1cc6
+foo.txt : f8ba7f8d26bae87b4d558f0e80eb3ff84da85f41
+bar.txt : 7129a5e1b280354f9cac8b1986622a1b9b91cc20
+foobar.txt : ee914830187d58b39cca5e70419cf270d0600917

@@ -14,7 +14,7 @@ public class Index {
 		i.add("foo.txt");
 		i.add("bar.txt");
 		i.add("foobar.txt");
-		i.remove("foo.txt");
+//		i.remove("foo.txt");
 	
 		
 		
@@ -33,7 +33,7 @@ public class Index {
 		PrintWriter pw = new PrintWriter("test/" + f); 
 		pw.append(""); 
 		pw.close(); 
-		File d = new File("test/objectsIndex"); 
+		File d = new File("test/objects"); 
 		d.mkdir(); 
 		
 	}
@@ -53,19 +53,20 @@ public class Index {
 	}
 	
 	public void add(String name) throws IOException {
-		Blob b = new Blob("test/" + name,"F"); 
+//		Blob b = new Blob("test/" + name,"F"); 
+		Blob b = new Blob("test/" + name,true); 
 		
 		//make file in objectsIndex
-		b.createFIndex(); 
+		b.createFBlobZipped(); 
 		
 		
-		String s = b.getHash(); 
+		String s = b.getHashZipped(); 
 		values.put(name,s); 
 		writeIndex(name); 
 	}
 	
 	public void remove (String name) throws FileNotFoundException {
-		File f = new File ("test/objectsIndex/" + values.get(name) + ".txt"); 
+		File f = new File ("test/objects/" + values.get(name) + ".txt"); 
 		f.delete(); 
 		values.remove(name); 
 		writeIndex(""); 

@@ -16,11 +16,12 @@ public class Blob {
 	private String unhashed; 
 	private String zipped;
 	private String hashedZipped; 
+	private String file; 
 
 
 
 	public static void main (String [] args) throws IOException {
-		Blob b = new Blob ("test/Stuff.txt",true); 
+//		Blob b = new Blob ("test/Stuff.txt",true); 
 		Blob b1 = new Blob("test/Stuff.txt");
 
 
@@ -28,7 +29,7 @@ public class Blob {
 	}
 
 	public Blob (String fileName) throws IOException {
-
+		file = fileName; 
 		String ret = "";
 
 		//get file and read 
@@ -60,47 +61,12 @@ public class Blob {
 
 
 
-	public Blob (String fileName, String Index) throws IOException { //for Index
-
-		String ret = "";
-
-		//get file and read 
-		try {
-
-			File f1 = new File(fileName);
-			Scanner read = new Scanner(f1);
-			while (read.hasNextLine()) {
-				ret += read.nextLine();
-			}
-			read.close(); 
-		} 
-		catch (FileNotFoundException err) {
-			System.out.println("There was an error!");
-			err.printStackTrace();
-		}
-		unhashed = ret; 
-		hashed = getSHA1(unhashed);
-		createFIndex();
-
-		//		System.out.println("text:" + ret);
-		//		System.out.println("encoded:" + hashed);
-		//		System.out.println ("BLOB^^"); 
-
-
-		//		read.close(); 
-
-	}
-
-
-
-
-
 
 	public Blob (String fileName, Boolean bool) throws IOException {//for zipping 
-
+		file = fileName; 
 		String ret = "";
 
-//		get file and read 
+		//		get file and read 
 		try {
 
 			File f1 = new File(fileName);
@@ -114,87 +80,69 @@ public class Blob {
 			System.out.println("There was an error!");
 			err.printStackTrace();
 		}
-		
-		zip(); //makes a duplicate zip file 
-		setZipped(); //reads content from base file and compresses text 
+
+		//		zip(file); //makes a duplicate zip file 
+		setZipped(file); //reads content from base file and compresses text 
 		hashedZipped = getSHA1(zipped); //sets hashedZipped for new zipped file name
-		zip2(); 
+		//		zip2(file); 
 
 
 		//		
 	}
 
-	public void zip() throws IOException {
-
-		String filePath = "test/Stuff.txt";
-		String zipPath = "test/objects/" + "Stuff" + ".txt.zip";
-
-		try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
-			File fileToZip = new File(filePath);
-			zipOut.putNextEntry(new ZipEntry(fileToZip.getName()));
-			Files.copy(fileToZip.toPath(), zipOut);
-		}
-
-
-	}
-
-
-	public void zip2() throws IOException {
-
-		System.out.println ("hashedZipped:" + hashedZipped); 
-		
-		String filePath = "test/objects/Stuff.txt.zip";
-		String zipPath = "test/objects/" + hashedZipped + ".txt.zip";
-
-		try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
-			File fileToZip = new File(filePath);
-			zipOut.putNextEntry(new ZipEntry(fileToZip.getName()));
-			Files.copy(fileToZip.toPath(), zipOut);
-		}
-
-
-		//
-		File delete = new File ("test/objects/Stuff.txt.zip"); 
-		delete.delete(); 
-
-	}
-
-	//	public void setZipped() throws IOException { //old reading from zipped file 
-	//		String temp = ""; 
-	//		File f1 = new File("test/" + "Stuff" + ".txt.zip");
+	//	public void zip(String filename) throws IOException {
 	//
-	//		//		Scanner read = new Scanner(f1);
-	//		//		while (read.hasNextLine()) {
-	//		//			temp += read.nextLine();
-	//		//		}
-	//		//		read.close(); 
-	//		BufferedReader	in = new BufferedReader(new FileReader("test/Stuff.txt.zip"));
+	////		String filePath = "test/Stuff.txt";
+	////		String zipPath = "test/objects/" + "Stuff" + ".txt.zip";
+	//		
+	//		String filePath = "test/" + filename;
+	//		String zipPath = "test/objects/" + filename + ".zip";
 	//
-	//		while (in.ready()) {
-	//			Character temp1 = (char)in.read(); 
-	//			temp+=temp1; 
-	//
+	//		try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
+	//			File fileToZip = new File(filePath);
+	//			zipOut.putNextEntry(new ZipEntry(fileToZip.getName()));
+	//			Files.copy(fileToZip.toPath(), zipOut);
 	//		}
 	//
 	//
-	//		in.close(); 
-	//
-	//		zipped = temp; 
-	//		System.out.println ("Zipped:" + zipped); 
-	//		//		System.out.println (zipped); 
-	//		//		return zipped;  
 	//	}
 
-	public void setZipped() throws IOException {//reading from unzipped file and compressing text
+
+	//	public void zip2(String filename) throws IOException {
+	//
+	//		System.out.println ("hashedZipped:" + hashedZipped); 
+	//		
+	////		String filePath = "test/objects/Stuff.txt.zip";
+	////		String zipPath = "test/objects/" + hashedZipped + ".txt.zip";
+	//		
+	//		String filePath = "test/objects/" + filename + ".zip";
+	//		String zipPath = "test/objects/" + hashedZipped + ".txt.zip";
+	//
+	//		try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipPath))) {
+	//			File fileToZip = new File(filePath);
+	//			zipOut.putNextEntry(new ZipEntry(fileToZip.getName()));
+	//			Files.copy(fileToZip.toPath(), zipOut);
+	//		}
+	//
+	//
+	//		//
+	//		File delete = new File ("test/objects/" + filename + ".zip"); 
+	//		delete.delete(); 
+	//
+	//	}
+
+
+
+	public void setZipped(String filename) throws IOException {//reading from unzipped file and compressing text
 		String temp = ""; 
-		File f1 = new File("test/" + "Stuff" + ".txt");
+		File f1 = new File(file);
 
 		//		Scanner read = new Scanner(f1);
 		//		while (read.hasNextLine()) {
 		//			temp += read.nextLine();
 		//		}
 		//		read.close(); 
-		BufferedReader	in = new BufferedReader(new FileReader("test/Stuff.txt"));
+		BufferedReader	in = new BufferedReader(new FileReader(file));
 
 		while (in.ready()) {
 			Character temp1 = (char)in.read(); 
@@ -205,7 +153,7 @@ public class Blob {
 		in.close(); 
 
 		zipped = compress(temp); 
-		
+
 		System.out.println ("Zipped:" + zipped); 
 		//		System.out.println (zipped); 
 		//		return zipped;  
@@ -249,6 +197,9 @@ public class Blob {
 	public String getHash() {
 		return hashed; 
 	}
+	public String getHashZipped() {
+		return hashedZipped; 
+	}
 
 
 	public void createFBlob () throws IOException { //with hashed as name
@@ -271,18 +222,27 @@ public class Blob {
 
 
 	}
+	public void createFBlobZipped () throws IOException { //with hashed as name
 
-	public void createFIndex () throws IOException { //with hashed as name
 
-		File f = new File (hashed + ".txt"); 
-		//		Path path = Paths.get(hashed + ".txt");
-		//		PrintWriter pw = new PrintWriter(path.toString()); 
-		PrintWriter pw = new PrintWriter("test/objectsIndex/" + f); 
-		pw.append(unhashed); 
+		//paths way
+		File f1 = new File ("objects"); 
+		//		Path folder = Paths.get(f1.toString());
+		//		Path path = Paths.get(hashed + ".txt"); 
+		//		Files.writeString(folder, unhashed);
+		//		PrintWriter pw = new PrintWriter(folder.toString()); 
+		//		pw.close(); 
+
+
+		//pw way
+		File f = new File (hashedZipped + ".txt"); 
+		PrintWriter pw = new PrintWriter("test/objects/" + f); //in test folder
+		pw.append(zipped); 
 		pw.close(); 
 
 
 	}
+
 
 
 
