@@ -29,7 +29,7 @@ public class Tree {
 				fileNameString += "\n";
 			}
 			
-			System.out.println(fileNameString);
+			//System.out.println(fileNameString);
 		}
 		
 		String shaCode = sha1Code(fileNameString);
