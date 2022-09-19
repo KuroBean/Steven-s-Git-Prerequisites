@@ -14,7 +14,8 @@ public class Index {
 		i.add("foo.txt");
 		i.add("bar.txt");
 		i.add("foobar.txt");
-//		i.remove("foo.txt");
+		i.remove("foo.txt");
+		
 	
 		
 		

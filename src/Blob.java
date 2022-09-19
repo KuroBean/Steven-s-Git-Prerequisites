@@ -81,6 +81,8 @@ public class Blob {
 			err.printStackTrace();
 		}
 
+		unhashed = ret; 
+		hashed = getSHA1(unhashed);
 		//		zip(file); //makes a duplicate zip file 
 		setZipped(file); //reads content from base file and compresses text 
 		hashedZipped = getSHA1(zipped); //sets hashedZipped for new zipped file name
@@ -155,6 +157,7 @@ public class Blob {
 		zipped = compress(temp); 
 
 		System.out.println ("Zipped:" + zipped); 
+//		System.out.println ("content:" + unhashed); 
 		//		System.out.println (zipped); 
 		//		return zipped;  
 	}
