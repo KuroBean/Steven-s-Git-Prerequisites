@@ -10,7 +10,6 @@ import java.util.zip.*;
 import java.nio.*; 
 
 
-
 public class Blob {
 	private String hashed; 
 	private String unhashed; 

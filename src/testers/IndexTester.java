@@ -1,5 +1,3 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
@@ -13,7 +11,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class BlobTester {
+class IndexTester {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -50,15 +48,25 @@ class BlobTester {
 	    }
 	    file.delete();
 	}
-
 	@Test
-	void testBlobCreation() throws Exception{
-		Blob testBlob = new Blob("test/test");
-		String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
-		File file = new File("test/objects/" + shaCode);
-		assertTrue(file.exists());
+	void testInit() throws Exception{
+		Index index = new Index();
+		index.init();
 		
-		testBlob.getHash();
+		//File file = new File("Index");
+		Path filePath = Paths.get("test/Index");
+		assertTrue(Files.exists(filePath));
+	
+		Path path = Paths.get("test/objects");
+	assertTrue(Files.exists(path));
+		
+		index.add("test");
+		String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
+		File file = new File("test/objects/" +shaCode);
+	assertTrue(file.exists());
+		
+		index.remove("c3499c2729730a7f807efb8676a92dcb6f8a3f8f");
+		assertTrue(file.exists());
 	}
 
 }

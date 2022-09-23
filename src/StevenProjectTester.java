@@ -24,29 +24,20 @@ class StevenProjectTester {
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		
-		
-//		File if2 = new File ("test/objects"); 
-//		deleteDir(if2); 
-		
-		
-		
-		
-		
+		File if2 = new File ("test/objects"); 
+		deleteDir(if2); 		
 		//String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
 		//File removed1 = new File("test/objects/" + shaCode);
 		//removed1.delete();
 		//File removed2 = new File ("test/test");
 		//removed2.delete();
 
-//		File objectsFolder = new File ("test/objects");
-//		objectsFolder.delete();
-//		File index = new File("test/Index");
-//		index.delete();
-
-
-
+		File objectsFolder = new File ("test/objects");
+		objectsFolder.delete();
+		File index = new File("test/Index");
+		index.delete();
 	}
+	
 	static void deleteDir(File file) {
 	    File[] contents = file.listFiles();
 	    if (contents != null) {
@@ -57,15 +48,15 @@ class StevenProjectTester {
 	    file.delete();
 	}
 
-	//	@Test
-	//	void testBlobCreation() throws Exception{
-	//		Blob testBlob = new Blob("test/test");
-	//		String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
-	//		File file = new File("test/objects/" + shaCode);
-	//		assertTrue(file.exists());
-	//		
-	//		testBlob.getHash();
-	//	}
+		@Test
+		void testBlobCreation() throws Exception{
+			Blob testBlob = new Blob("test/test");
+			String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
+			File file = new File("test/objects/" + shaCode);
+			assertTrue(file.exists());
+			
+			testBlob.getHash();
+		}
 
 
 	//	@Test
