@@ -56,7 +56,7 @@ class BlobTester {
 	@Test
 	void testBlobCreation() throws Exception{
 		Blob testBlob = new Blob("test/test");
-		String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
+		String shaCode = "3ef5025e733e7023d7a2276def76bff49488cc6c.txt";
 		File file = new File("test/objects/" + shaCode);
 		assertTrue(file.exists());
 		testBlob.getHash();

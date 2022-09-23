@@ -57,18 +57,18 @@ class IndexTester {
 		index.init();
 		
 		//File file = new File("Index");
-		Path filePath = Paths.get("test/Index");
+		Path filePath = Paths.get("test/Index.txt");
 		assertTrue(Files.exists(filePath));
 	
 		Path path = Paths.get("test/objects");
 	assertTrue(Files.exists(path));
 		
 		index.add("test");
-		String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
+		String shaCode = "3ef5025e733e7023d7a2276def76bff49488cc6c.txt";
 		File file = new File("test/objects/" +shaCode);
 	assertTrue(file.exists());
 		
-		index.remove("c3499c2729730a7f807efb8676a92dcb6f8a3f8f");
+		index.remove("3ef5025e733e7023d7a2276def76bff49488cc6c.txt");
 		assertTrue(file.exists());
 	}
 	
