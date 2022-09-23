@@ -31,7 +31,7 @@ public class Tree {
 			
 			//System.out.println(fileNameString);
 		}
-		
+		  
 		String shaCode = sha1Code(fileNameString);
 		File file = new File("test/objects/" + shaCode);
 		PrintWriter print = new PrintWriter(file);

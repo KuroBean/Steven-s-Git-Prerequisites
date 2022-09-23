@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class TreeTester {
+class CommitTester {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -25,7 +25,6 @@ class TreeTester {
 			e.printStackTrace();
 		}
 	}
-	/*
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
@@ -41,7 +40,7 @@ class TreeTester {
 		objectsFolder.delete();
 		File index = new File("test/Index");
 		index.delete();
-	}*/
+	}
 	static void deleteDir(File file) {
 	    File[] contents = file.listFiles();
 	    if (contents != null) {
@@ -51,20 +50,30 @@ class TreeTester {
 	    }
 	    file.delete();
 	}
-	
 	@Test
-	void testTree() throws Exception{
+	void testCommit() throws Exception{
 		ArrayList<String> test = new ArrayList<String>();
-		
-	test.add("blob : 81e0268c84067377a0a1fdfb5cc996c93f6dcf9f randomFile.txt");
-	test.add("blob : 01d82591292494afd1602d175e165f94992f6f5f beans.jpg");
-	test.add("blob : f1d82236ab908c86ed095023b1d2e6ddf78a6d83 beans.stl");
-	test.add("tree : bd1ccec139dead5ee0d8c3a0499b42a7d43ac44b jeff.txt");
-		test.add("tree : e7d79898d3342fd15daf6ec36f4cb095b52fd976 beb.java");
-		
+
+		test.add("blob : 81e0268c84067377a0a1fdfb5cc996c93f6dcf9f");
+		test.add("blob : 01d82591292494afd1602d175e165f94992f6f5f");
+		test.add("blob : f1d82236ab908c86ed095023b1d2e6ddf78a6d83");
+		test.add("tree : bd1ccec139dead5ee0d8c3a0499b42a7d43ac44b");
+		test.add("tree : e7d79898d3342fd15daf6ec36f4cb095b52fd976");
+
 		Tree tree1 = new Tree(test);
-		File file = new File("test/objects/3a554c26fde7b7b89a25711af9b830d07e542a71");
+		File file = new File("test/objects/dd4840f48a74c1f97437b515101c66834b59b1be");
 		assertTrue(file.exists());
+
+		Commit c = new Commit("dd4840f48a74c1f97437b515101c66834b59b1be","CSUM.","CAUTH.",null); 
+		c.writeFile(); 
+
+		Commit d = new Commit("dd4840f48a74c1f97437b515101c66834b59b1be","DSUM.","DAUTH.",c.getFileName());
+		d.writeFile(); 
+
+		Commit e = new Commit("dd4840f48a74c1f97437b515101c66834b59b1be","ESUM.","EAUTH.",d.getFileName());
+		e.writeFile(); 
+
 	}
 	
 }
+	
