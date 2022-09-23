@@ -208,7 +208,8 @@ public class Blob {
 
 
 		//paths way
-		File f1 = new File ("objects"); 
+		File f1 = new File ("test/objects"); 
+		f1.mkdir();
 		//		Path folder = Paths.get(f1.toString());
 		//		Path path = Paths.get(hashed + ".txt"); 
 		//		Files.writeString(folder, unhashed);
@@ -217,8 +218,8 @@ public class Blob {
 
 
 		//pw way
-		File f = new File (hashed + ".txt"); 
-		PrintWriter pw = new PrintWriter("test/objects/" + f); //in test folder
+		File f = new File ("test/objects/" +hashed + ".txt"); 
+		PrintWriter pw = new PrintWriter(f); //in test folder
 		pw.append(unhashed); 
 		pw.close(); 
 

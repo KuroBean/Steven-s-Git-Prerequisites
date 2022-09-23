@@ -14,12 +14,13 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
 @SuiteDisplayName("Git Project Tester")
-@SelectPackages("src")
+@SelectPackages("")
 @IncludeClassNamePatterns(".*Tester")
 class AllTests {
     
     @Test
     public void test() {
         assertTrue(true);
+        
     }
 }

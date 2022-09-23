@@ -1,3 +1,5 @@
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
@@ -48,6 +50,7 @@ class IndexTester {
 	    }
 	    file.delete();
 	}
+	
 	@Test
 	void testInit() throws Exception{
 		Index index = new Index();
@@ -68,5 +71,6 @@ class IndexTester {
 		index.remove("c3499c2729730a7f807efb8676a92dcb6f8a3f8f");
 		assertTrue(file.exists());
 	}
-
+	
 }
+	

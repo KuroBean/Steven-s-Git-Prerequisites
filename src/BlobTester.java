@@ -1,5 +1,6 @@
 
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
@@ -25,7 +26,7 @@ class BlobTester {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
 		File if2 = new File ("test/objects"); 
@@ -41,6 +42,7 @@ class BlobTester {
 		File index = new File("test/Index");
 		index.delete();
 	}
+	
 	static void deleteDir(File file) {
 	    File[] contents = file.listFiles();
 	    if (contents != null) {
@@ -57,8 +59,10 @@ class BlobTester {
 		String shaCode = "c3499c2729730a7f807efb8676a92dcb6f8a3f8f";
 		File file = new File("test/objects/" + shaCode);
 		assertTrue(file.exists());
-		
 		testBlob.getHash();
+		
+		
+		
 	}
 
 }
